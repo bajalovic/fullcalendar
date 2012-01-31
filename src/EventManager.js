@@ -135,8 +135,21 @@ function EventManager(options, _sources) {
 				if (endParam) {
 					data[endParam] = Math.round(+rangeEnd / 1000);
 				}
-				pushLoading();
-				$.ajax($.extend({}, ajaxDefaults, source, {
+				
+				// abort all ajaxRequests
+				for(var i = 0; i<ajaxRequests.length; i++) {
+					ajaxRequests[i].abort();
+				}
+				
+				// reset ajaxRequests array
+				ajaxRequests = [];
+				// reset ajax calls that wait for timeout
+				clearTimeout(ajaxRequestTimeout);
+				 
+				ajaxRequestTimeout = setTimeout(function() {
+					pushLoading();
+					// add to ajaxRequests array	
+					ajaxRequests.push($.ajax($.extend({}, ajaxDefaults, source, {
 					data: data,
 					success: function(events) {
 						events = events || [];
@@ -154,7 +167,9 @@ function EventManager(options, _sources) {
 						applyAll(complete, this, arguments);
 						popLoading();
 					}
-				}));
+				}))
+					); // end of adding to ajaxRequests array
+				}, options.delayAjaxOnSwitchView);
 			}else{
 				callback();
 			}

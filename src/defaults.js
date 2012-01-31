@@ -4,6 +4,8 @@ var defaults = {
 	// display
 	defaultView: 'month',
 	aspectRatio: 1.35,
+	eventWidthRatio: .95, // width ratio of event
+	delayAjaxOnSwitchView: 250, // delay ajax calls on switch views
 	header: {
 		left: 'title',
 		center: '',

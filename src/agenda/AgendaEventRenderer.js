@@ -181,7 +181,7 @@ function AgendaEventRenderer() {
 			forward = seg.forward || 0;
 			leftmost = colContentLeft(colI*dis + dit);
 			availWidth = colContentRight(colI*dis + dit) - leftmost;
-			availWidth = Math.min(availWidth-6, availWidth*.95); // TODO: move this to CSS
+			availWidth = Math.min(availWidth-6, availWidth* opt('eventWidthRatio')); // TODO: move this to CSS
 			if (levelI) {
 				// indented and thin
 				outerWidth = availWidth / (levelI + forward + 1);
